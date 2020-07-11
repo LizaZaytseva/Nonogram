@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/img3"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/mainTitle"
+        android:layout_width="425dp"
+        android:layout_height="113dp"
+        android:gravity="center"
+        android:text="Японские кроссворды"
+        android:background="#81F8C9C0"
+        android:textColor="#F73E3834"
+        android:textSize="43sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.653"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.128" />
+
+    <Button
+        android:id="@+id/rules"
+        android:layout_width="240dp"
+        android:layout_height="60dp"
+        android:text="Правила игры"
+        android:textSize="20sp"
+        android:background="#EBF4BAC3"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.485"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.526"
+        android:onClick="gameRules"/>
+
+    <Button
+        android:id="@+id/play"
+        android:layout_width="240dp"
+        android:layout_height="60dp"
+        android:gravity="center"
+        android:text="Игра"
+        android:textSize="20sp"
+        android:background="#EBF4BAC3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.374"
+        android:onClick="play"/>
+
+    <Button
+        android:id="@+id/exit"
+        android:layout_width="240dp"
+        android:layout_height="60dp"
+        android:text="выход"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:background="#EBF4BAC3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.48"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.678"
+        android:onClick="exit"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
