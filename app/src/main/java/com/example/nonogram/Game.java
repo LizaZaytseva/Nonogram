@@ -4,23 +4,27 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class Game extends AppCompatActivity implements View.OnClickListener{
 
-    private String selectedB = "empty";
+    private String selectedB = "add";
     private Button addB, rulesB, emptyB, clearB;
     private ImageButton exitGameB;
     private GridView gameBoard;
     private Logic logic;
-    //Изначально выбранной кнопкой считается "Отметить пустую клетку"
+    //Изначально выбранной кнопкой считается
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +38,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener{
 
         logic = new Logic(this);
         gameBoard.setAdapter(logic);
+
 
         gameBoard.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

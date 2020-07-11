@@ -70,7 +70,6 @@ public class Logic extends BaseAdapter{
                 if (numberArray[i][j] == 1) pic.add("empty");
                 if (numberArray[i][j] == 2) pic.add("add");
             }
-
         }
     }
 
@@ -81,25 +80,29 @@ public class Logic extends BaseAdapter{
 
     @Override
     public Object getItem(int i) {
-        return null;
+        return numberArray[getR(i)][getC(i)];
     }
 
     @Override
     public long getItemId(int i) {
-        return 0;
+        return i;
     }
 
     //Метод, реализующий отрисовку рабочего поля
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
+        //создаем объект типа ImageView, нужен для для отображения изображений
         ImageView iView;
 
+        //если компонент вью, который поступает в метод, пустой, то мы ивью - новый имейджвью
+        //по сути, если до этого отрисовки не было, то ивью - новый имеджвью, а если была, но присваиваем актуальное значение
         if (view == null) iView = new ImageView(context);
         else iView = (ImageView)view;
-
+        //определяем индификатор по имени файла, указывая позицию в листе пик, папку, где хранится и что-то еще:)))
         int picId = res.getIdentifier(pic.get(i), "drawable", context.getPackageName());
+        //добавляем во ивью то, что нашли по этому идентификатору
         iView.setImageResource(picId);
-
+        //возвращаем ивью
         return iView;
     }
 
