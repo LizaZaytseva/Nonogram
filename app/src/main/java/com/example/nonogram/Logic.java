@@ -11,25 +11,40 @@ import android.widget.ListAdapter;
 
 import java.util.ArrayList;
 
-public class Logic extends BaseAdapter{
+public class Logic extends BaseAdapter {
 
     //Создаем элементы классов Context и Resources для реализации отрисовки
     private Context context;
     private Resources res;
 
     //Создаем лист, который хранит ссылки на изображения, соответсвующие значениям в рабочем массиве
-    private ArrayList<String> pic;
+    private String[] pic;
 
     //Задаем кол-во строк и столбцов
     int rows = 15;
     int cols = 15;
 
     //Создаем массив, который будет хранить введеные играком значения
-    private int[][] numberArray = new int[cols][rows];
+    private int[][] numberArray =  {{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
 
     //Создаем массив, который будет хранить значения, соответсвующие решению
-    int[][] solutionArray = {{1, 1, 1, 1, 2, 1, 1, 2, 2, 1, 1, 1, 1, 1},
-                    {1, 1, 1, 1, 2, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1},
+    int[][] solutionArray =
+                    {{1, 1, 1, 1, 2, 1, 1, 2, 2, 1, 1, 1, 1, 1, 1},
+                    {1, 1, 1, 2, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1},
                     {1, 2, 1, 2, 1, 2, 1, 1, 2, 1, 1, 1, 2, 2, 1},
                     {1, 2, 1, 2, 1, 2, 1, 2, 1, 1, 1, 1, 2, 1, 2},
                     {1, 2, 1, 2, 1, 2, 1, 2, 1, 1, 1, 2, 1, 2, 1},
@@ -45,30 +60,30 @@ public class Logic extends BaseAdapter{
                     {1, 1, 1, 1, 1, 1, 2, 2, 1, 1, 1, 1, 1, 1, 1}};
 
     //Создаем конструктор класса Logic
-    public Logic(Context context){
-        this.context = context;
-        pic = new ArrayList<>(cols*rows);
+    public Logic(Context c){
+        context = c;
+        pic = new String[cols*rows];
         res = context.getResources();
-        clear();
         board();
     }
 
     //Приводим массив в начальное состояние (заполняем нулями)
     public void clear(){
         for (int i = 0; i < 15; i++){
-            for (int j = 0; j < 15; j++){
+           for (int j = 0; j < 15; j++){
                 numberArray[i][i]=0;
-            }
+                pic[i*15 + j] = "nothing";
+           }
         }
-    }
+   }
 
     //Создаем метод, который будет добавлять изображения, соответсвующие значениям в массиве numberArray
     private void board(){
         for(int i = 0; i < 15; i++){
             for(int j = 0; j < 15; j++){
-                if (numberArray[i][j] == 0) pic.add("nothing");
-                if (numberArray[i][j] == 1) pic.add("empty");
-                if (numberArray[i][j] == 2) pic.add("add");
+                if (numberArray[i][j] == 0) pic[i*15 + j] = "nothing";
+                if (numberArray[i][j] == 1) pic[i*15 + j] = "empty";
+                if (numberArray[i][j] == 2) pic[i*15 + j] = "add";
             }
         }
     }
@@ -80,12 +95,12 @@ public class Logic extends BaseAdapter{
 
     @Override
     public Object getItem(int i) {
-        return numberArray[getR(i)][getC(i)];
+        return null;
     }
 
     @Override
     public long getItemId(int i) {
-        return i;
+        return 0;
     }
 
     //Метод, реализующий отрисовку рабочего поля
@@ -93,16 +108,14 @@ public class Logic extends BaseAdapter{
     public View getView(int i, View view, ViewGroup viewGroup) {
         //создаем объект типа ImageView, нужен для для отображения изображений
         ImageView iView;
-
-        //если компонент вью, который поступает в метод, пустой, то мы ивью - новый имейджвью
-        //по сути, если до этого отрисовки не было, то ивью - новый имеджвью, а если была, но присваиваем актуальное значение
+        //присваиваем iView значение
         if (view == null) iView = new ImageView(context);
-        else iView = (ImageView)view;
-        //определяем индификатор по имени файла, указывая позицию в листе пик, папку, где хранится и что-то еще:)))
-        int picId = res.getIdentifier(pic.get(i), "drawable", context.getPackageName());
-        //добавляем во ивью то, что нашли по этому идентификатору
+        else iView = (ImageView) view;
+        //определяем индификатор по имени файла
+        Integer picId = res.getIdentifier(pic[i], "drawable", context.getPackageName());
+        //добавляем во iView то, но нашлось по полученному идентификатору
         iView.setImageResource(picId);
-        //возвращаем ивью
+
         return iView;
     }
 
@@ -117,16 +130,17 @@ public class Logic extends BaseAdapter{
     }
 
     //Проверяем, соответсвует ли рабочий массив массиву с решением. Если да, то игрок выиграл
-    public boolean win(){
+    public boolean isWin(){
         return (solutionArray == numberArray);
     }
 
     //Изменяем массив, в зависимости от выбранной кнопки
     public void setNumber(int i, String selectedB){
-        pic.set(i, selectedB);
+        pic[i] =  selectedB;
         if (selectedB.contains("empty")) numberArray[getR(i)][getC(i)] = 1;
         if (selectedB.contains("add")) numberArray[getR(i)][getC(i)] = 2;
-        if (selectedB.contains("clear")) numberArray[getR(i)][getC(i)] = 0;
+        if (selectedB.contains("nothing")) clear();
         notifyDataSetChanged();
     }
+
 }
