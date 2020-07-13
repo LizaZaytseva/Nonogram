@@ -77,7 +77,6 @@ public class Logic extends BaseAdapter {
                 if  (numberArray[i][j] == 1) pictures[i*15 + j] ="empty";
                 if  (numberArray[i][j] == 2) pictures[i*15 + j] = "add";
             }
-
         }
     }
 
