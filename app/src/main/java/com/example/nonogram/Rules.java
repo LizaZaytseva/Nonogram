@@ -20,10 +20,4 @@ public class Rules extends Activity {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
-
-    //Метод реализует возвращение к игровому полю
-    public void toGame(View view) {
-        Intent intent = new Intent(this, Game.class);
-        startActivity(intent);
-    }
 }

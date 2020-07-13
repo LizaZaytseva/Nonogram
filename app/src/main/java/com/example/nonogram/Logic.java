@@ -2,44 +2,38 @@ package com.example.nonogram;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.database.DataSetObserver;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Logic extends BaseAdapter {
-
     //Создаем элементы классов Context и Resources для реализации отрисовки
-    private Context context;
-    private Resources res;
-
-    //Создаем лист, который хранит ссылки на изображения, соответсвующие значениям в рабочем массиве
-    private String[] pic;
-
-    //Задаем кол-во строк и столбцов
-    int rows = 15;
-    int cols = 15;
-
+    private Context mContext;
+    private Resources resources;
+    //Задаем количество строк и столбцов
+    private final Integer rows = 15, cols = 15;
+    //Создаем массив, который хранит ссылки на изображения, соответсвующие значениям в рабочем массиве
+    private String[] pictures;
     //Создаем массив, который будет хранить введеные играком значения
-    private int[][] numberArray =  {{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
+    private int[][] numberArray =
+                    {{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
 
     //Создаем массив, который будет хранить значения, соответсвующие решению
     int[][] solutionArray =
@@ -60,38 +54,35 @@ public class Logic extends BaseAdapter {
                     {1, 1, 1, 1, 1, 1, 2, 2, 1, 1, 1, 1, 1, 1, 1}};
 
     //Создаем конструктор класса Logic
-    public Logic(Context c){
-        context = c;
-        pic = new String[cols*rows];
-        res = context.getResources();
+    public Logic(Context context){
+        mContext = context;
+        pictures = new String[cols*rows];
+        resources = mContext.getResources();
         board();
     }
 
     //Приводим массив в начальное состояние (заполняем нулями)
     public void clear(){
-        for (int i = 0; i < 15; i++){
-           for (int j = 0; j < 15; j++){
-                numberArray[i][i]=0;
-                pic[i*15 + j] = "nothing";
-           }
-        }
-   }
-
-    //Создаем метод, который будет добавлять изображения, соответсвующие значениям в массиве numberArray
-    private void board(){
-        for(int i = 0; i < 15; i++){
-            for(int j = 0; j < 15; j++){
-                if (numberArray[i][j] == 0) pic[i*15 + j] = "nothing";
-                if (numberArray[i][j] == 1) pic[i*15 + j] = "empty";
-                if (numberArray[i][j] == 2) pic[i*15 + j] = "add";
+        for (int i = 0; i < rows*cols; i++){
+                numberArray[getRow(i)][getColumn(i)] = 0;
+                pictures[i] = "nothing";
             }
+    }
+
+    //Создаем метод, который будет добавлять названия изображений, соответсвующие значениям в массиве numberArray
+    private void board() {
+        for(int i = 0; i < rows; i++){
+            for(int j = 0; j< cols; j++){
+                if (numberArray[i][j] == 0) pictures[i*15 + j] = "nothing";
+                if  (numberArray[i][j] == 1) pictures[i*15 + j] ="empty";
+                if  (numberArray[i][j] == 2) pictures[i*15 + j] = "add";
+            }
+
         }
     }
 
     @Override
-    public int getCount() {
-        return rows*cols;
-    }
+    public int getCount() { return cols * rows; }
 
     @Override
     public Object getItem(int i) {
@@ -107,40 +98,55 @@ public class Logic extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         //создаем объект типа ImageView, нужен для для отображения изображений
-        ImageView iView;
+        ImageView imView;
+
         //присваиваем iView значение
-        if (view == null) iView = new ImageView(context);
-        else iView = (ImageView) view;
+        if(view == null) imView = new ImageView(mContext);
+        else imView = (ImageView)view;
+
         //определяем индификатор по имени файла
-        Integer picId = res.getIdentifier(pic[i], "drawable", context.getPackageName());
+        Integer picId = resources.getIdentifier(pictures[i], "drawable", mContext.getPackageName());
+
         //добавляем во iView то, но нашлось по полученному идентификатору
-        iView.setImageResource(picId);
+        imView.setImageResource(picId);
 
-        return iView;
-    }
-
-    //По порядковому номеру определяем номер строки в рабочем массиве
-    public int getR(int i){
-        return i/15;
-    }
-
-    //По порядковому номеру определяем номер столбца в рабочем массиве
-    public int getC(int i){
-        return i%15;
-    }
-
-    //Проверяем, соответсвует ли рабочий массив массиву с решением. Если да, то игрок выиграл
-    public boolean isWin(){
-        return (solutionArray == numberArray);
+        return imView;
     }
 
     //Изменяем массив, в зависимости от выбранной кнопки
-    public void setNumber(int i, String selectedB){
-        pic[i] =  selectedB;
-        if (selectedB.contains("empty")) numberArray[getR(i)][getC(i)] = 1;
-        if (selectedB.contains("add")) numberArray[getR(i)][getC(i)] = 2;
-        if (selectedB.contains("nothing")) clear();
-        notifyDataSetChanged();
+    public void setNumber(int i, String selectedButton) {
+        pictures[i] =  selectedButton;
+        if (selectedButton.contains("empty")) numberArray[getRow(i)][getColumn(i)] = 1;
+        if (selectedButton.contains("add")) numberArray[getRow(i)][getColumn(i)] = 2;
+        if (selectedButton.contains("nothing")) clear();
+                notifyDataSetChanged();
+            }
+
+    //По порядковому номеру определяем номер строки в рабочем массиве
+    public int getRow(int i){
+        return i/rows;
+    }
+
+    //По порядковому номеру определяем номер строки в рабочем массиве
+    public int getColumn(int i){
+        return i%cols;
+    }
+
+    //Проверка на победу, если игрок верно собрал кроссворд, то массивы должны совпасть
+    public boolean isWin(){
+        return (Arrays.deepEquals(numberArray, solutionArray));
+
+    }
+
+    //Проверка на наличие ошибок
+    public boolean isRight() {
+        int k = 0;
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if ((numberArray[i][j] != 0) && (numberArray[i][j] != solutionArray[i][j])) k++;
+            }
+        }
+        return (k == 0);
     }
 
 }

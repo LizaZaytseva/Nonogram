@@ -17,16 +17,14 @@ public class MainActivity extends Activity {
     Button exitB;
     TextView mainTitle;
 
-    //
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getItems();
-
     }
 
-    //
+    //Соотносим определенные кнопки с теми, что прописаны в файле xml
     public void getItems(){
         rulesB = (Button) findViewById(R.id.rules);
         playB = (Button) findViewById(R.id.play);
@@ -34,20 +32,20 @@ public class MainActivity extends Activity {
         mainTitle = (TextView) findViewById(R.id.mainTitle);
     }
 
-    //реализуем переход в окно Rules при нажатии кнопки "правила игры"
+    //Реализуем переход в окно Rules при нажатии кнопки "правила игры"
     public void gameRules(View view) {
         Intent intent = new Intent(this, Rules.class);
         startActivity(intent);
     }
 
-    //реализуем переход в окно Game при нажатии кнопки "играть"
+    //Реализуем переход в окно Game при нажатии кнопки "играть"
     public void play(View view) {
         Intent intent = new Intent(this, Game.class);
         startActivity(intent);
     }
 
-    //реализуем выход из приложения при нажатии кнопки "выход"
+    //Реализуем выход из приложения при нажатии кнопки "выход"
     public void exit(View view) {
-        finish();
+        finishAffinity();
     }
 }

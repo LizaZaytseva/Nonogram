@@ -1,31 +1,18 @@
 package com.example.nonogram;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridView;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import java.util.ArrayList;
 
 public class Game extends Activity implements View.OnClickListener{
 
     private String selectedB = "add";
-    private Button addB, emptyB, clearB;
+    private Button addB, emptyB, clearB, solutionB;
     private Button exitGameB;
     private GridView gameBoard;
     private Logic logic;
@@ -41,6 +28,8 @@ public class Game extends Activity implements View.OnClickListener{
         gameBoard = (GridView) findViewById(R.id.gridView);
         //Задаем кол-во столбцов в GridView
         gameBoard.setNumColumns(15);
+        gameBoard.setHorizontalSpacing(1);
+        gameBoard.setVerticalSpacing(1);
         //Определяем, что Grid View незаблокированный элемент
         gameBoard.setEnabled(true);
         //Подключаем адаптер к классу Logic
@@ -53,7 +42,7 @@ public class Game extends Activity implements View.OnClickListener{
                 logic.setNumber(i, selectedB);
                 //Проверяем, выиграл ли игрок на данном шаге
                 if (logic.isWin()) {
-                    Toast.makeText(getApplicationContext(), "win", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Поздравляю, вы выиграли!", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -63,12 +52,14 @@ public class Game extends Activity implements View.OnClickListener{
         exitGameB = (Button) findViewById(R.id.exitGame);
         emptyB = (Button) findViewById(R.id.empty);
         clearB = (Button) findViewById(R.id.clear);
+        solutionB = (Button) findViewById(R.id.solution);
 
         //Подключаем метод, который будет отслеживать нажатие на кнопки
         addB.setOnClickListener(this);
         exitGameB.setOnClickListener(this);
         emptyB.setOnClickListener(this);
         clearB.setOnClickListener(this);
+        solutionB.setOnClickListener(this);
     }
 
     //Метод, обрабатывающий нажатие кнопок
@@ -87,6 +78,13 @@ public class Game extends Activity implements View.OnClickListener{
                 break;
             case R.id.clear:
                 selectedB = "nothing";
+                break;
+            case R.id.solution:
+                if (logic.isRight()) {
+                    Toast.makeText(getApplicationContext(), "Ошибок нет!", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "В вашем решении есть ошибка(и)!", Toast.LENGTH_LONG).show();
+                }
                 break;
         }
     }
