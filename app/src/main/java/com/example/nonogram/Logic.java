@@ -69,7 +69,7 @@ public class Logic extends BaseAdapter {
             }
     }
 
-    //Создаем метод, который будет добавлять названия изображений, соответсвующие значениям в массиве numberArray
+    //Создаем метод, который будет добавлять названия изображений, соответствующие значениям в массиве numberArray
     private void board() {
         for(int i = 0; i < rows; i++){
             for(int j = 0; j< cols; j++){
